@@ -25,7 +25,7 @@
 			{
 				color: red;
 			}
-			img
+			figure img
 			{
 				border: 1px solid #ccc;
 				margin: 0px 1in;
@@ -62,10 +62,13 @@
 				background: white;
 			}
 		</style>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+		<script type="text/javascript" src="https://blockchain.info//Resources/wallet/pay-now-button.js"></script>
 	</head>
 	<body>
 		<div id="author">
-			<p><small>By Derek Berner, copyright &copy; 2014. Permission to reproduce is hereby granted.</small></p>
+			<p><small>By Derek Berner, copyright &copy; 2014. Permission to reproduce is hereby granted. Please direct all comments, questions and suggestions to the "issues" section of <a href="https://github.com/bernerbits/bernerbits.github.io/issues">my GitHub page</a>.</small></p>
+			<p><small><a href="#donations">Donate</a></small></p>
 		</div>
 		<div id="intro">
 			<h1>Introduction</h1>
@@ -205,6 +208,40 @@
 				<li id="note2"><a href="#note2-return">^</a>On Linux/Unix and Mac systems, this will grant ownership to root. You may need to change ownership to the HTTP daemon user.
 				On Mac OS X this is _www and on Ubuntu it is usually apache. After downloading the source, use the following command for a Mac: <code>sudo chown -R _www RaspberryPints/</code> and use this for Ubuntu: <code>sudo chown -R apache RaspberryPints/</code></li>
 			</ol>
+		</div>
+		<div id="donations">
+			<h1>Shameless Panhandling</h1>
+			<h2>(aka donations)</h2>
+			<p>If you liked this tutorial, buy me a beer! 25% of donations go to support RaspberryPints, and 50% go to support my son's college education fund.</p>
+			<h3>PayPal</h3>
+			<p><form style="padding-left:0.5in" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
+">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form></p>
+			<h3>Bitcoin</h3>
+			<div style="font-size:16px;margin:0 0;width:300px;padding-left:0.5in" class="blockchain-btn"
+			     data-address="1J2LPej2LqxhYmoUiroJcUwLbdYPE3RsMc"
+			     data-shared="false">
+			    <div class="blockchain stage-begin">
+				<img src="https://blockchain.info//Resources/buttons/donate_64.png"/>
+			    </div>
+			    <div class="blockchain stage-loading" style="text-align:center">
+				<img src="https://blockchain.info//Resources/loading-large.gif"/>
+			    </div>
+			    <div class="blockchain stage-ready">
+				 <p align="center">Please Donate To Bitcoin Address: <b>[[address]]</b></p>
+				 <p align="center" class="qr-code"></p>
+			    </div>
+			    <div class="blockchain stage-paid">
+				 Donation of <b>[[value]] BTC</b> Received. Thank You.
+			    </div>
+			    <div class="blockchain stage-error">
+				<font color="red">[[error]]</font>
+			    </div>
+			</div>
 		</div>
 	</body>
 </html>
