@@ -5,12 +5,61 @@
 		<style type="text/css">
 			code {
 				background: black;
-				color: white;
-				width: 80%;
+				color: lightgreen;
 				padding: 10px;
 				margin: 10px 30px;
 				display: block;
 				clear: both;
+				left: 20px;
+				right: 20px;
+			}
+			div
+			{
+				font-family: Geneva, ‘Lucida Sans’, ‘Lucida Grande’, ‘Lucida Sans Unicode’, Verdana, sans-serif;
+			}
+			h1,h2,h3,h4,h5,h6
+			{
+				font-family: Palatino, ‘Palatino Linotype’, ‘Hoefler Text’, Times, ‘Times New Roman’, serif;
+			}
+			em strong, strong em
+			{
+				color: red;
+			}
+			img
+			{
+				border: 1px solid #ccc;
+				margin: 0px 1in;
+				width: 100%;
+				-moz-box-shadow: 3px 3px 4px #000;
+				-webkit-box-shadow: 3px 3px 4px #000;
+				box-shadow: 3px 3px 4px #000;
+				/* For IE 8 */
+				-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000')";
+				/* For IE 5.5 - 7 */
+				filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000');
+			}
+			figure
+			{
+				margin: 0.3in 0;
+				padding: 0;
+				width: 80%;
+			}
+			figcaption
+			{
+				font-size: 0.65em;
+				padding: 0.4em 1in;
+				color: #888;
+			}
+			html
+			{
+				background: skyblue;
+			}
+			body
+			{
+				margin: 0px 50px;
+				min-width: 8.5in;
+				padding: 0.5in;
+				background: white;
 			}
 		</style>
 	</head>
@@ -20,7 +69,7 @@
 			<h2><em><strong>Note that this is an incomplete work in progress.</strong></em></h2>
 			<p>If you're a brewer, home or otherwise, you may have heard about the excellent project <a href="http://raspberrypints.com">RaspberryPints</a>,
 			a software package for the RaspberryPi that allows you to display your tap list on a large-screen TV for your friends and/or customers to
-			view quickly and at a glance, adding a touch of elegance to your beloved brewery:</p>
+			view quickly and at a glance, adding a touch of class and elegance to your beloved brewery:</p>
 			<figure>
 				<img src="./img/pints-display.png" alt="source: raspberrypints.com" />
 				<figcaption>source: raspberrypints.com</figcaption>
@@ -33,7 +82,7 @@
 			just as easily and display in a mobile browser with few issues.</p>
 			<p>(It also means with a little bit of tweaking, I could plug in some jQuery extensions to enhance the site with touch screen
 			capabilities. Draw a pint, tap the screen, update my inventory. Coooool. But first things first, let's get this thing up and running.)</p>
-			<p>By the end of this howto, you should be up and running with a version of RaspberryPints without the overhead of purchasing additional hardware.</p>
+			<p>By the end of this howto, you should be up and running with RaspberryPints without the overhead of purchasing additional hardware.</p>
 		</div>
 		<div id="ingredients">
 			<h1>You will need:</h1>
@@ -50,16 +99,17 @@
 			<h3>(aka: <a href="http://xkcd.com/353/">import antigravity</a>)</h3>
 			<p>Let me apologize for the handwaving in this section.</p>
 			<p>I will try to make no assumptions as to your skill level. However, I also can't make any assumptions as to what platform you're using.
-			Rather than cover every platform, I'll just say that I used <a href="http://vanbosse.be/blog/detail/a-homebrew-lamp-stack">this</a> to get me
-			up and running on a Mac, and offer you some links that should work on other platforms:
+			Rather than cover every platform, I'll just say that I used <a href="http://vanbosse.be/blog/detail/a-homebrew-lamp-stack">this</a> tutorial
+			successfully on a Mac, and offer you some links that should work on other platforms:
 			</p>
 			<ul>
 				<li><strong>Windows:</strong> <a href="http://www.neothermic.com/tutorials/ApacheTutorial.php">How to Install Apache, MySQL and PHP on a Windows System</a></li>
 				<li><strong>Mac OS X:</strong> <a href="http://vanbosse.be/blog/detail/a-homebrew-lamp-stack">A Homebrew LAMP stack</a></li>
 				<li><strong>Ubuntu:</strong> <a href="https://help.ubuntu.com/community/ApacheMySQLPHP">ApacheMySQLPHP</a></li>
 				<li><strong>Other Linux:</strong> <em>If you're smart enough to be running anything else as your OS, you're smart enough to do this step on your own, cowboy.</em></li>
-			<p><strong>Important: Make a note of all passwords and directories at this stage; you'll need them later!</strong></p>
 			</ul>
+			<p><strong>Important: Make a note of all passwords and directories at this stage; you'll need them later!</strong></p>
+			<p></p>
 		</div>
 		<div id="install-git">
 			<h1>Step 2</h1>
@@ -78,8 +128,8 @@
 			<p>Now it's time to grab the source code. Assuming the above two steps are done, this is all you need to do:</p>
 			<ol>
 				<li>Open a command prompt.</li>
-				<li>Change to the document root for Apache as installed in step 1 (for me, this was /Library/Webserver/Documents)</li>
-				<li>Type the following command<sup><a href="#note1">1</a> <a href="#note2">2</a></sup>: <code>sudo git clone https://github.com/RaspberryPints/RaspberryPints</code></li>
+				<li>Change directories to the document root for Apache as installed in step 1 (for me, this was /Library/WebServer/Documents)</li>
+				<li>Type the following command<sup><a href="#note1" id="note1-return">1</a> <a href="#note2" id="note2-return">2</a></sup>: <code>sudo git clone https://github.com/RaspberryPints/RaspberryPints</code></li>
 			</ol>
 			<p>That's it! You now have RaspberryPints on your computer. We still need to set it up before we can use it, however.</p>
 		</div>
@@ -87,9 +137,9 @@
 			<h1>Step 4</h1>
 			<h2>Setting up RaspberryPints</h2>
 			<p>Assuming all has gone well up to this point, simply open a browser and point it at <a href="http://localhost/RaspberryPints/install" target="_blank">http://localhost/RaspberryPints/install</a>. You should see the following page or something similar:</p>
-			<figcaption>
+			<figure>
 				<img src="./img/pints-install.png" />
-			</figcaption>
+			</figure>
 			<p>Step 1 lets RaspberryPints connect to MySQL and install your "beers" database. Use the root password you set up in Step 1 of <em>this</em> howto.</p>
 			<p>Step 2 installs the "beers" database. These can be anything and you probably won't ever use them directly.</p>
 			<p>Step 3 sets up your administrator account. This is the password you'll be using to modify your beer inventory behind the scenes.</p>
@@ -108,7 +158,8 @@
 			wifi card. The "dotted quartet" of numbers after the address is your IP address. Write this number down.</p>
 			<p>Next, open the browser app on your tablet. In the address bar, type "http://&lt;IP_ADDRESS&gt;/RaspberryPints", replacing &lt;IP_ADDRESS&gt;
 			with the address you just wrote down. If all goes well, you should see the RaspberryPints application on your tablet:</p>
-			<figure>Take snapshot here</figure>
+			<figure><img src="./img/tablet-with-taps.jpg" style="width:80%" /><figcaption>In all its digital goodness... It will look better once I get it mounted!</figcaption></figure>
+			<figure><img src="./img/tablet-close-up.jpg" style="width:80%" /><figcaption>A better view - excuse the poor quality Galaxy S3 camera!</figcaption></figure>
 			<p>Congrats! You now have a snazzy digital taplist for display in your brewery, and you didn't have to spend a nickel on specialized hardware.
 			Remember that you can administer this page from <a href="http://localhost/RaspberryPints/admin">http://localhost/RaspberryPints/admin</a> on
 			your desktop, and it will update remotely.</p>
@@ -116,9 +167,9 @@
 		<div id="footnotes">
 			<h1>Notes</h1>
 			<ol>
-				<li id="note1">Note that if you are running in Windows, you will not need "sudo" - this is there to override user privileges
+				<li id="note1"><a href="#note1-return">^</a>Note that if you are running in Windows, you will not need "sudo" - this is there to override user privileges
 				on Linux/Unix and Mac systems. Instead, your command will be: <code>git clone https://github.com/RaspberryPints/RaspberryPints</code></li>
-				<li id="note2">On Linux/Unix and Mac systems, this will grant ownership to root. You may need to change ownership to the HTTP daemon user.
+				<li id="note2"><a href="#note2-return">^</a>On Linux/Unix and Mac systems, this will grant ownership to root. You may need to change ownership to the HTTP daemon user.
 				On Mac OS X this is _www and on Ubuntu it is usually apache. After downloading the source, use the following command for a Mac: <code>sudo chown -R _www RaspberryPints/</code> and use this for Ubuntu: <code>sudo chown -R apache RaspberryPints/</code></li>
 			</ol>
 		</div>
