@@ -64,9 +64,11 @@
 		</style>
 	</head>
 	<body>
+		<div id="author">
+			<p><small>By Derek Berner, copyright &copy; 2014. Permission to reproduce is hereby granted.</small></p>
+		</div>
 		<div id="intro">
 			<h1>Introduction</h1>
-			<h2><em><strong>Note that this is an incomplete work in progress.</strong></em></h2>
 			<p>If you're a brewer, home or otherwise, you may have heard about the excellent project <a href="http://raspberrypints.com">RaspberryPints</a>,
 			a software package for the RaspberryPi that allows you to display your tap list on a large-screen TV for your friends and/or customers to
 			view quickly and at a glance, adding a touch of class and elegance to your beloved brewery:</p>
@@ -74,14 +76,14 @@
 				<img src="./img/pints-display.png" alt="source: raspberrypints.com" />
 				<figcaption>source: raspberrypints.com</figcaption>
 			</figure>
-			<p>I was inspired to write this how-to when a fellow homebrewer inquired about running the software without RaspberryPi, using his tablet 
+			<p>I was inspired to write this howto when a fellow homebrewer inquired about running the software without RaspberryPi, using his tablet 
 			instead of a TV screen. At first we were spitballing solutions like setting up an X11 tunnel over SSH to an emulated Pi using 
 			<a href="http://xecdesign.com/qemu-emulating-raspberry-pi-the-easy-way/">QEMU</a>, but I decided to take a look at the 
 			<a href="https://github.com/RaspberryPints/RaspberryPints">source code</a> to see if there was an easier way. Turns out it's just
 			<a href="http://en.wikipedia.org/wiki/LAMP_(software_bundle)">PHP over MySQL</a>, which means it should run on a desktop computer
 			just as easily and display in a mobile browser with few issues.</p>
 			<p>(It also means with a little bit of tweaking, I could plug in some jQuery extensions to enhance the site with touch screen
-			capabilities. Draw a pint, tap the screen, update my inventory. Coooool. But first things first, let's get this thing up and running.)</p>
+			capabilities. Draw a pint, tap the screen, update my inventory. Coooool. But first things first, let's finish this howto.)</p>
 			<p>By the end of this howto, you should be up and running with RaspberryPints without the overhead of purchasing additional hardware.</p>
 		</div>
 		<div id="ingredients">
@@ -109,7 +111,19 @@
 				<li><strong>Other Linux:</strong> <em>If you're smart enough to be running anything else as your OS, you're smart enough to do this step on your own, cowboy.</em></li>
 			</ul>
 			<p><strong>Important: Make a note of all passwords and directories at this stage; you'll need them later!</strong></p>
-			<p></p>
+			<h3>Hints</h3>
+			<p>Here are some notes that may help you complete the above tutorials:</p>
+			<ul>
+				<li>On a Mac, the final location of your PHP binary ("libphp5.so") may differ, so it's very important that you tell Apache the
+				correct location. The installer will give you the exact line to type, so watch the output carefully. You can also use the following 
+				terminal command to search your computer for this file:
+				<code>sudo find / -type f -name 'libphp5.so' 2>/dev/null</code></li>
+				<li>On a Mac, the MySQL installer does not start the database automatically, and the command in the tutorial to update the MySQL password
+				will not work until you start the service. This command will start the database for you:
+				<code>mysql.server start</code></li>
+				<li>Use this command on Mac/Linux to restart the Apache server if you have issues with the configuration:
+				<code>sudo apachectl restart</code></li>
+			</ul>
 		</div>
 		<div id="install-git">
 			<h1>Step 2</h1>
@@ -154,15 +168,34 @@
 			<p>Now, for the part that this was all for, setting up a tablet to display RaspberryPints. First, you need to figure out the <em>local IP</em>
 			of the computer you installed RaspberryPints on. In a command terminal, type the following if you are on a Mac or Linux:<code>ifconfig</code>
 			and this if you are on Windows:<code>ipconfig /all</code></p>
-			<p>You are looking for a line that says "inet addr" or "IP Address". If there are multiple such lines, use the one associated with your
-			wifi card. The "dotted quartet" of numbers after the address is your IP address. Write this number down.</p>
-			<p>Next, open the browser app on your tablet. In the address bar, type "http://&lt;IP_ADDRESS&gt;/RaspberryPints", replacing &lt;IP_ADDRESS&gt;
-			with the address you just wrote down. If all goes well, you should see the RaspberryPints application on your tablet:</p>
+			<p>You are looking for a line that says "inet" or "inet addr" (on Linux/Mac) or "IP Address" (Windows).
+			If you are running on Linux or a Mac and are having a hard time sorting through all the information this command belches out, the following command will help you sort through the uninteresting information:
+			<code>ifconfig |grep inet</code></p>
+			<figure>
+				<img src="./img/ifconfig-output-annotated.png" />
+				<figcaption>Sample output of the above command with possible IP addresses highlighted. This will look very different on Windows. Note that there are
+				multiple possibilities, so I had to try multiple addresses on my tablet to get it to work. Ignore 127.0.0.1 as it is never an external IP address.
+				</figcaption>
+			</figure>
+			<p>When you have found the line that says "inet" or "IP Address", then look for a set of four 1-3 digit numbers separated by periods. This is your local IP address. Write this number down. If there are multiple
+			addresses, start with the first one and work your way down the list. <em>(But ignore 127.0.0.1. This is never an externally valid IP; it is how 
+			all computers refer to themselves.)</em></p>
+			<p>Next, open your preferred browser app on your tablet. In the address bar, type "http://&lt;IP_ADDRESS&gt;/RaspberryPints", replacing &lt;IP_ADDRESS&gt;
+			with the address you just wrote down. (Again, you may have to try a few to get this step right.) If all goes well, you should see the RaspberryPints application on your tablet:</p>
 			<figure><img src="./img/tablet-with-taps.jpg" style="width:80%" /><figcaption>In all its digital goodness... It will look better once I get it mounted!</figcaption></figure>
 			<figure><img src="./img/tablet-close-up.jpg" style="width:80%" /><figcaption>A better view - excuse the poor quality Galaxy S3 camera!</figcaption></figure>
 			<p>Congrats! You now have a snazzy digital taplist for display in your brewery, and you didn't have to spend a nickel on specialized hardware.
 			Remember that you can administer this page from <a href="http://localhost/RaspberryPints/admin">http://localhost/RaspberryPints/admin</a> on
 			your desktop, and it will update remotely.</p>
+			<p><strong><em>Important Note:</em></strong> Depending on your wifi hardware, your IP address may change periodically. If you ever find that
+			you cannot view RaspberryPints on your tablet but you can view it via the "localhost" link above, repeat this step.</p>
+		</div>
+		<div id="additional-stuff">
+			<h1>Additional Stuff</h1>
+			<p>Now that you have RaspberryPints up and running, you will probably want to do things like run the browser in fullscreen mode, keep the screen
+			from dimming and turning off automatically, set up static DHCP for your computer, etc. Unfortunately, since all tablets and wifi routers are 
+			different, this is beyond the scope of this tutorial, but for completeness, you will probably want to do these things anyway. 
+			Just remember: Google is your friend. Good luck!</p>
 		</div>
 		<div id="footnotes">
 			<h1>Notes</h1>
